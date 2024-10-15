@@ -1,0 +1,29 @@
+#listy
+tab = list()
+wordTab = []
+
+#zbiory
+#tylko unikatowe wartości
+zbiorLiczb = set()
+
+#słowniki
+DICKtionary = dict()
+
+data = open("haslo.txt")
+
+for row in data:
+    print(row)
+    row = row.split()
+    print(row)
+    word = row[0]
+    nr = int(row[1])
+    wordTab.append(word)
+    tab.append(nr)
+    
+print(tab)
+print(wordTab)
+
+print(max(tab), min(tab), sum(tab), len(tab))
+print(sorted(wordTab))
+print(sorted(wordTab, reverse=True))
+print(tab)
