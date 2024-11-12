@@ -1,0 +1,55 @@
+# Funkcja do znalezienia liczby czarnych pikseli w każdej ćwiartce
+def znajdz_ilosc_czarnych_pikseli(cwiartka):
+    return sum(sum(wiersz) for wiersz in cwiartka)
+
+# Funkcja do sprawdzenia, czy obrazek jest naprawialny
+def czy_naprawialny(macierz):
+    bledne_wiersze = []
+    bledne_kolumny = []
+    
+    # Sprawdzamy parzystość dla każdego wiersza
+    for i, wiersz in enumerate(macierz):
+        if sum(wiersz) % 2 != 0:
+            bledne_wiersze.append(i)
+    
+    # Sprawdzamy parzystość dla każdej kolumny
+    for j in range(len(macierz[0])):
+        suma_kolumny = sum(macierz[i][j] for i in range(len(macierz)))
+        if suma_kolumny % 2 != 0:
+            bledne_kolumny.append(j)
+    
+    # Jeśli jest dokładnie jeden błędny wiersz i jedna błędna kolumna, obrazek jest naprawialny
+    return len(bledne_wiersze) == 1 and len(bledne_kolumny) == 1, bledne_wiersze, bledne_kolumny
+
+# Funkcja do naprawy obrazka
+def napraw_obrazek(macierz):
+    naprawialny, bledne_wiersze, bledne_kolumny = czy_naprawialny(macierz)
+    
+    if naprawialny:
+        wiersz = bledne_wiersze[0]
+        kolumna = bledne_kolumny[0]
+        macierz[wiersz][kolumna] = 1 - macierz[wiersz][kolumna]  # Zmiana bitu na przeciwny
+        print("Obrazek naprawiony.")
+    else:
+        print("Obrazek jest nienaprawialny.")
+    
+    return macierz
+
+# Przykładowa macierz 4x4 (0 - biały, 1 - czarny piksel)
+macierz = [
+    [1, 0, 1, 1],
+    [0, 1, 0, 1],
+    [1, 1, 1, 0],
+    [1, 0, 0, 1]
+]
+
+print("Obrazek przed naprawą:")
+for wiersz in macierz:
+    print(wiersz)
+
+# Naprawa obrazka
+macierz_naprawiona = napraw_obrazek(macierz)
+
+print("Obrazek po naprawie:")
+for wiersz in macierz_naprawiona:
+    print(wiersz)
